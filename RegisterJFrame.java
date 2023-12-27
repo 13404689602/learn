@@ -1,5 +1,3 @@
-package Gameui;
-
 import javax.swing.*;
 
 public class RegisterJFrame extends JFrame {

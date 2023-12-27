@@ -1,32 +1,64 @@
-package Gameui;
-
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+import java.util.Random;
 
 public class GameJFrame extends JFrame {
+
+    int[][] number=new int[3][3];
     public GameJFrame(){
+        //初始化页面
         initpage();
+        //初始化菜单
         initmenu();
+        //初始化数据
+        initdata();
+        //初始化图片
         initimage();
     }
 
+    private void initdata() {
+        //定义一个一维数组
+        int[] temp ={0,1,2,3,4,5,6,7,8};
+        //打乱顺序
+        Random r=new Random();
+        for (int i = 0; i < temp.length; i++) {
+            int random= r.nextInt(temp.length);
+            int tempa=temp[i];
+            temp[i]=temp[random];
+            temp[random]=tempa;
+        }
+        int count=0;
+        //给二维数组添加数据
+        for (int j = 0; j < 3; j++) {
+            for (int i = 0; i < 3; i++) {
+                number[j][i]=temp[count];
+                count++;
+            }
+        }
+    }
+
     private void initimage() {
-        int count=1;
         //设置每行
         for (int i = 0; i < 3; i++) {
             //控制一行的照片输出
             for (int j = 0; j < 3; j++) {
                 //创建一个图片对象Imageicon
-                ImageIcon icon=new ImageIcon("C:\\Users\\86134\\IdeaProjects\\feibo\\图片\\"+count+".png");
+                ImageIcon icon=new ImageIcon("C:\\Users\\86134\\IdeaProjects\\feibo\\图片\\"+number[i][j]+".png");
                 //创建一个管理容器Jlabel
                 JLabel jLabel=new JLabel(icon);
                 //设置管理容器位置jlabel
-                jLabel.setBounds(80*j,80*i,80,80);
+                jLabel.setBounds(80*j+180,80*i+220,80,80);
+                //添加边框
+                jLabel.setBorder(new BevelBorder(BevelBorder.LOWERED));
                 //把管理容器添加到页面中
                 this.getContentPane().add(jLabel);
-                count++;
             }
         }
-
+        //设置背景
+        JLabel background=new JLabel(new ImageIcon("C:\\Users\\86134\\IdeaProjects\\feibo\\图片\\ground.png"));
+        background.setBounds(40,40,508,560);
+        this.getContentPane().add(background);
     }
 
 
