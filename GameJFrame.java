@@ -11,6 +11,7 @@ import java.util.Random;
 public class GameJFrame extends JFrame implements KeyListener, MouseListener {
 
     int[][] number = new int[4][4];
+    int space=0;
     int[][] win = new int[][]{{0, 1, 2, 3}, {4, 5, 6, 7}, {8, 9, 10, 11}, {12, 13, 14, 15}};
     int count = 0;
     JMenuItem replay = new JMenuItem("重新游戏");
@@ -18,6 +19,10 @@ public class GameJFrame extends JFrame implements KeyListener, MouseListener {
     JMenuItem closeitem = new JMenuItem("关闭游戏");
 
     JMenuItem accountitem = new JMenuItem("公众号");
+
+    //JMenuItem select =new JMenuItem("切换图片");
+
+    JMenuItem yu =new JMenuItem("宇神");
     public GameJFrame() {
         //初始化页面
         initpage();
@@ -105,6 +110,7 @@ public class GameJFrame extends JFrame implements KeyListener, MouseListener {
         //菜单上的功能
         JMenu functionjMenu = new JMenu("功能");
         JMenu aboutjMenu = new JMenu("关于我们");
+        JMenu select =new JMenu("切换图片");
         //功能细分
 
         replay.addMouseListener(this);
@@ -115,13 +121,16 @@ public class GameJFrame extends JFrame implements KeyListener, MouseListener {
 
         accountitem.addMouseListener(this);
 
+        yu.addMouseListener(this);
         //添加功能
         jMenuBar.add(functionjMenu);
         jMenuBar.add(aboutjMenu);
         functionjMenu.add(replay);
+        functionjMenu.add(select);
         functionjMenu.add(relogin);
         functionjMenu.add(closeitem);
         aboutjMenu.add(accountitem);
+        select.add(yu);
         //给页面设置菜单
         this.setJMenuBar(jMenuBar);
         //打开
@@ -177,7 +186,7 @@ public class GameJFrame extends JFrame implements KeyListener, MouseListener {
         //先获取空白处的位置
         for (int j = 0; j < 4; j++) {
             for (int i = 0; i < 4; i++) {
-                if (number[j][i] == 0) {
+                if (number[j][i] == space) {
                     x = j;
                     y = i;
                 }
@@ -189,7 +198,7 @@ public class GameJFrame extends JFrame implements KeyListener, MouseListener {
                 return;
             }
             number[x][y] = number[x - 1][y];
-            number[x - 1][y] = 0;
+            number[x - 1][y] = space;
 
             //步数加1
             count++;
@@ -200,7 +209,7 @@ public class GameJFrame extends JFrame implements KeyListener, MouseListener {
                 return;
             }
             number[x][y] = number[x + 1][y];
-            number[x + 1][y] = 0;
+            number[x + 1][y] = space;
 
             //步数加1
             count++;
@@ -212,7 +221,7 @@ public class GameJFrame extends JFrame implements KeyListener, MouseListener {
                 return;
             }
             number[x][y] = number[x][y + 1];
-            number[x][y + 1] = 0;
+            number[x][y + 1] = space;
 
             //步数加1
             count++;
@@ -224,7 +233,7 @@ public class GameJFrame extends JFrame implements KeyListener, MouseListener {
                 return;
             }
             number[x][y] = number[x][y - 1];
-            number[x][y - 1] = 0;
+            number[x][y - 1] = space;
 
             //步数加1
             count++;
@@ -288,6 +297,13 @@ public class GameJFrame extends JFrame implements KeyListener, MouseListener {
             media.setBounds(100,100,399,399);
             this.getContentPane().add(media);
             this.getContentPane().repaint();
+        } else if (e.getSource()==yu) {
+            System.out.println("切换宇神");
+
+            path="C:\\Users\\86134\\IdeaProjects\\feibo\\YU\\";
+            space=15;
+            initdata();
+            initimage();
         }
     }
 
